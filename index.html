@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>丁大刀的博客 - GitHub项目展示</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>丁大刀</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link">首页</a></li>
+                <li><a href="#projects" class="nav-link">项目</a></li>
+                <li><a href="#about" class="nav-link">关于</a></li>
+                <li><a href="#blog" class="nav-link">博客</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">你好，我是丁大刀</h1>
+                <p class="hero-subtitle">全栈开发者 | 开源贡献者 | 技术博主</p>
+                <p class="hero-description">
+                    专注于前端开发和开源项目，致力于创造有价值的工具和解决方案。
+                    欢迎探索我的GitHub项目和技术分享。
+                </p>
+                <div class="hero-buttons">
+                    <a href="#projects" class="btn btn-primary">查看项目</a>
+                    <a href="https://github.com/dingdadao" class="btn btn-secondary" target="_blank">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="code-window">
+                    <div class="window-header">
+                        <div class="window-buttons">
+                            <span class="btn-red"></span>
+                            <span class="btn-yellow"></span>
+                            <span class="btn-green"></span>
+                        </div>
+                        <span class="window-title">dingdadao@github</span>
+                    </div>
+                    <div class="window-content">
+                        <pre><code>const developer = {
+  name: "丁大刀",
+  skills: ["JavaScript", "React", "Node.js"],
+  passion: "开源项目",
+  github: "dingdadao"
+};</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="projects">
+        <div class="container">
+            <h2 class="section-title">精选项目</h2>
+            <div class="projects-grid">
+                <div class="project-card featured">
+                    <div class="project-header">
+                        <div class="project-icon">
+                            <i class="fas fa-chrome"></i>
+                        </div>
+                        <div class="project-badge">精选</div>
+                    </div>
+                    <h3 class="project-title">Emby CRX</h3>
+                    <p class="project-description">
+                        一个强大的Chrome扩展，为Emby媒体服务器提供增强功能和更好的用户体验。
+                        支持自定义主题、快捷键操作、批量管理等功能。
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Chrome Extension</span>
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">Emby API</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/dingdadao/emby-crx" class="project-link" target="_blank">
+                            <i class="fab fa-github"></i> 查看源码
+                        </a>
+                        <a href="#" class="project-link" onclick="showProjectDetails('emby-crx')">
+                            <i class="fas fa-info-circle"></i> 了解更多
+                        </a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <div class="project-icon">
+                            <i class="fas fa-network-wired"></i>
+                        </div>
+                    </div>
+                    <h3 class="project-title">cosDnaPorxy</h3>
+                    <p class="project-description">
+                        通过本地智能识别并篡改DNS解析结果，将Cloudflare污染或劣质IP替换为优选节点，实现无需代理的加速和防DNS污染。
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Go</span>
+                        <span class="tech-tag">DNS</span>
+                        <span class="tech-tag">网络优化</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/dingdadao/cosDnaPorxy" class="project-link" target="_blank">
+                            <i class="fab fa-github"></i> 查看源码
+                        </a>
+                        <a href="#" class="project-link" onclick="showProjectDetails('cosDnaPorxy')">
+                            <i class="fas fa-info-circle"></i> 了解更多
+                        </a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <div class="project-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                    </div>
+                    <h3 class="project-title">更多项目</h3>
+                    <p class="project-description">
+                        更多精彩项目正在开发中，敬请期待...
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-tag">React</span>
+                        <span class="tech-tag">Node.js</span>
+                        <span class="tech-tag">TypeScript</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/dingdadao" class="project-link" target="_blank">
+                            <i class="fab fa-github"></i> 查看所有项目
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2 class="section-title">关于我</h2>
+                    <p class="about-description">
+                        我是一名充满热情的全栈开发者，专注于前端技术和开源项目开发。
+                        我相信技术的力量可以改变世界，通过开源项目为社区贡献价值。
+                    </p>
+                    <div class="skills">
+                        <h3>技术栈</h3>
+                        <div class="skills-grid">
+                            <div class="skill-item">
+                                <i class="fab fa-js-square"></i>
+                                <span>JavaScript</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fab fa-react"></i>
+                                <span>React</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fab fa-node-js"></i>
+                                <span>Node.js</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fab fa-git-alt"></i>
+                                <span>Git</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">5+</div>
+                        <div class="stat-label">开源项目</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">100+</div>
+                        <div class="stat-label">代码提交</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">3+</div>
+                        <div class="stat-label">年开发经验</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="blog" class="blog">
+        <div class="container">
+            <h2 class="section-title">最新博客</h2>
+            <div class="blog-grid">
+                <article class="blog-card">
+                    <div class="blog-image">
+                        <img src="https://via.placeholder.com/400x250/6366f1/ffffff?text=Emby+CRX" alt="Emby CRX">
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span class="blog-date">2024年1月</span>
+                            <span class="blog-category">技术分享</span>
+                        </div>
+                        <h3 class="blog-title">Emby CRX 项目开发历程</h3>
+                        <p class="blog-excerpt">
+                            分享Emby CRX Chrome扩展的开发过程，包括技术选型、架构设计和实现细节...
+                        </p>
+                        <a href="#" class="blog-link">阅读更多</a>
+                    </div>
+                </article>
+
+                <article class="blog-card">
+                    <div class="blog-image">
+                        <img src="https://via.placeholder.com/400x250/10b981/ffffff?text=cosDnaPorxy" alt="cosDnaPorxy">
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span class="blog-date">2024年1月</span>
+                            <span class="blog-category">网络优化</span>
+                        </div>
+                        <h3 class="blog-title">cosDnaPorxy: 智能DNS优化工具</h3>
+                        <p class="blog-excerpt">
+                            分享cosDnaPorxy项目的开发思路，如何通过本地DNS优化解决网络访问问题，提升用户体验...
+                        </p>
+                        <a href="#" class="blog-link">阅读更多</a>
+                    </div>
+                </article>
+
+                <article class="blog-card">
+                    <div class="blog-image">
+                        <img src="https://via.placeholder.com/400x250/6366f1/ffffff?text=Chrome+Extension" alt="Chrome Extension">
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span class="blog-date">2024年1月</span>
+                            <span class="blog-category">教程</span>
+                        </div>
+                        <h3 class="blog-title">Chrome扩展开发指南</h3>
+                        <p class="blog-excerpt">
+                            详细介绍Chrome扩展的开发流程，从基础概念到高级功能的实现...
+                        </p>
+                        <a href="#" class="blog-link">阅读更多</a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>丁大刀</h3>
+                    <p>全栈开发者，开源爱好者</p>
+                </div>
+                <div class="footer-section">
+                    <h4>链接</h4>
+                    <ul>
+                        <li><a href="https://github.com/dingdadao" target="_blank">GitHub</a></li>
+                        <li><a href="mailto:contact@example.com">联系我</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>项目</h4>
+                    <ul>
+                        <li><a href="https://github.com/dingdadao/emby-crx" target="_blank">Emby CRX</a></li>
+                        <li><a href="https://github.com/dingdadao/cosDnaPorxy" target="_blank">cosDnaPorxy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 丁大刀. 保留所有权利.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 项目详情模态框 -->
+    <div id="projectModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 
