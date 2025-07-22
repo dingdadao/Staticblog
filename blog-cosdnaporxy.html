@@ -25,7 +25,7 @@
     <main class="blog-detail-main">
         <div class="container">
             <div class="blog-detail-header">
-                <h1>cosDnaPorxy: 智能DNS优化工具</h1>
+                <h1>cosDnaPorxy: 智能DNS代理服务</h1>
                 <div class="blog-meta">
                     <span class="blog-date">2024年1月</span>
                     <span class="blog-category">网络优化</span>
@@ -33,60 +33,36 @@
             </div>
             <div class="blog-detail-content">
                 <h2>项目简介</h2>
-                <p>cosDnaPorxy 是一个基于Go语言开发的智能DNS优化工具，通过本地智能识别并篡改DNS解析结果，将Cloudflare污染或劣质IP替换为优选节点，实现无需代理的加速和防DNS污染。</p>
-                <h2>核心特性</h2>
+                <p>cosDnaPorxy 是一个高性能、智能化的DNS代理服务，支持多云节点优选、域名分流、标签智能路由、DoT/DoH多上游、权重/最快优选等高级功能，帮助用户实现灵活、高效、安全的DNS解析体验。</p>
+                <h2>核心功能</h2>
                 <ul>
-                    <li>本地智能识别并篡改DNS解析结果</li>
-                    <li>自动将Cloudflare污染或劣质IP替换为优选节点</li>
-                    <li>无需代理即可加速和防DNS污染</li>
-                    <li>高性能、低资源占用，支持多平台</li>
+                    <li><strong>多云节点优选：</strong>支持自动优选 AWS、Cloudflare（CF）、腾讯云、阿里云等多家云服务商的DNS节点，动态选择最快/最优节点。</li>
+                    <li><strong>名单/标签智能分流：</strong>可自定义域名名单（如淘宝系列、微信/QQ等），指定走阿里、腾讯等不同DNS解析；也可根据域名标签（如“金融”、“社交”）智能分流到不同上游。</li>
+                    <li><strong>多上游协议支持：</strong>支持 DoT（DNS over TLS）、DoH（DNS over HTTPS）等多种安全DNS协议，提升隐私与安全性。</li>
+                    <li><strong>权重与最快优选：</strong>支持多上游节点权重分配、自动测速，优先选择最快或权重最高的DNS服务器。</li>
+                    <li><strong>灵活配置：</strong>支持配置文件灵活定制分流规则、上游节点、优选策略等，满足复杂场景需求。</li>
                 </ul>
-                <h2>快速开始</h2>
+                <h2>典型应用场景</h2>
+                <ul>
+                    <li>加速国内外网站访问，自动避开污染/劣质DNS节点</li>
+                    <li>企业/个人多云环境下的智能DNS路由</li>
+                    <li>按业务/域名类型分流（如金融、社交、视频等）</li>
+                    <li>提升DNS安全性与隐私保护</li>
+                </ul>
+                <h2>使用示例</h2>
                 <ol>
-                    <li><strong>编译项目</strong><br>
-                        <pre><code>go build -o bin/dnsupdate main.go
-# 或指定Go版本
-/path/to/go build -o bin/dnsupdate main.go</code></pre>
-                    </li>
-                    <li><strong>运行服务</strong><br>
-                        <pre><code>./bin/dnsupdate
-# 或指定配置文件
-./bin/dnsupdate -c configs/config.yaml</code></pre>
-                    </li>
+                    <li>配置多组上游DNS节点（如AWS、CF、阿里、腾讯等），可指定DoT/DoH协议</li>
+                    <li>自定义域名名单或标签，指定不同DNS解析策略</li>
+                    <li>启动服务后，自动测速并优选最快/最优节点</li>
+                    <li>支持实时监控、日志输出、动态调整配置</li>
                 </ol>
-                <h2>配置说明</h2>
+                <h2>技术亮点</h2>
                 <ul>
-                    <li>主配置文件：<code>configs/config.yaml</code></li>
-                    <li>白名单域名：<code>configs/whitelist.txt</code>（可选）</li>
-                    <li>定向域名：<code>configs/designated.txt</code></li>
+                    <li>高性能Go实现，低资源占用</li>
+                    <li>支持多协议、多上游、多云节点</li>
+                    <li>灵活分流、智能优选、标签化管理</li>
+                    <li>易于部署，配置简单，开源可扩展</li>
                 </ul>
-                <h2>目录结构</h2>
-                <ul>
-                    <li><strong>internal/</strong>：核心代码（配置、DNS处理、地理数据、监控、工具）</li>
-                    <li><strong>configs/</strong>：配置文件</li>
-                    <li><strong>data/</strong>：地理位置/IP数据</li>
-                    <li><strong>docs/</strong>：文档</li>
-                    <li><strong>scripts/</strong>：证书、部署、维护脚本</li>
-                    <li><strong>build/</strong>：编译输出</li>
-                </ul>
-                <h2>常用命令</h2>
-                <ul>
-                    <li>编译：<code>go build -o bin/dnsupdate main.go</code></li>
-                    <li>运行：<code>./bin/dnsupdate -c configs/config.yaml</code></li>
-                    <li>测试：<code>cd scripts/test && chmod +x *.sh && ./test_dns.sh</code></li>
-                </ul>
-                <h2>监控与日志</h2>
-                <ul>
-                    <li>Prometheus指标：访问 <code>http://localhost:9090/metrics</code></li>
-                    <li>支持不同级别日志输出，可通过配置文件调整</li>
-                </ul>
-                <h2>贡献指南</h2>
-                <ol>
-                    <li>Fork 项目</li>
-                    <li>创建功能分支</li>
-                    <li>提交更改</li>
-                    <li>创建 Pull Request</li>
-                </ol>
                 <h2>项目地址</h2>
                 <p><a href="https://github.com/dingdadao/cosDnaPorxy" target="_blank">https://github.com/dingdadao/cosDnaPorxy</a></p>
             </div>

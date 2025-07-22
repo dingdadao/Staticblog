@@ -26,21 +26,24 @@ body, html {
     background: #f8fafc;
     position: relative;
     margin: 0 auto;
-    max-height: 90vh;
+    max-height: 95vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     overflow-x: hidden;
+    overflow-y: auto;
 }
 .snake-modal-inner {
-    padding: 2.2rem 1.2rem 1.2rem 1.2rem;
+    padding: 2.2rem 1.2rem 2.5rem 1.2rem;
     width: 100%;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     align-items: center;
     overflow-x: hidden;
+    overflow-y: auto;
+    max-height: 70vh;
 }
 .snake-game-wrapper {
     width: 100%;
@@ -48,6 +51,7 @@ body, html {
     flex-direction: column;
     align-items: center;
     overflow-x: hidden;
+    padding-bottom: 2.5rem;
 }
 #snake-canvas {
     width: 100% !important;
