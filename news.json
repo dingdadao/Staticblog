@@ -1,0 +1,37 @@
+[
+  {
+    "name": "freeCodeCamp/freeCodeCamp",
+    "description": "freeCodeCamp.org's open-source codebase and curriculum. Learn to code for free.",
+    "stars": 381000,
+    "language": "JavaScript",
+    "url": "https://github.com/freeCodeCamp/freeCodeCamp"
+  },
+  {
+    "name": "996icu/996.ICU",
+    "description": "Repo for counting stars and contributing. Press F to pay respect to glorious developers.",
+    "stars": 267000,
+    "language": "Rust",
+    "url": "https://github.com/996icu/996.ICU"
+  },
+  {
+    "name": "EbookFoundation/free-programming-books",
+    "description": ":books: Freely available programming books",
+    "stars": 312000,
+    "language": "Markdown",
+    "url": "https://github.com/EbookFoundation/free-programming-books"
+  },
+  {
+    "name": "vuejs/vue",
+    "description": "🖖 Vue.js is a progressive, incrementally-adoptable JavaScript framework for building UI on the web.",
+    "stars": 207000,
+    "language": "JavaScript",
+    "url": "https://github.com/vuejs/vue"
+  },
+  {
+    "name": "tensorflow/tensorflow",
+    "description": "An Open Source Machine Learning Framework for Everyone",
+    "stars": 182000,
+    "language": "C++",
+    "url": "https://github.com/tensorflow/tensorflow"
+  }
+] 

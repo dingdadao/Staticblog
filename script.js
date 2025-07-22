@@ -333,3 +333,29 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style); 
+
+// 动态加载GitHub热门项目新闻
+function renderNews() {
+    fetch('news.json')
+        .then(res => res.json())
+        .then(news => {
+            const newsList = document.getElementById('news-list');
+            if (!newsList) return;
+            newsList.innerHTML = news.map(item => `
+                <div class="news-card">
+                    <div class="news-header">
+                        <a href="${item.url}" target="_blank" class="news-title">${item.name}</a>
+                    </div>
+                    <div class="news-desc">${item.description}</div>
+                    <div class="news-meta">
+                        <span class="news-lang"><i class="fas fa-code"></i> ${item.language || '未知'}</span>
+                        <span class="news-stars"><i class="fas fa-star"></i> ${item.stars.toLocaleString()}</span>
+                    </div>
+                </div>
+            `).join('');
+        });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    renderNews();
+}); 

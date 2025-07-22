@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cosDnaPorxy 项目详情 - 丁大刀的博客</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>丁大刀</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html#home" class="nav-link">首页</a></li>
+                <li><a href="index.html#projects" class="nav-link">项目</a></li>
+                <li><a href="index.html#about" class="nav-link">关于</a></li>
+                <li><a href="index.html#blog" class="nav-link">博客</a></li>
+            </ul>
+        </div>
+    </nav>
+    <main class="blog-detail-main">
+        <div class="container">
+            <div class="blog-detail-header">
+                <h1>cosDnaPorxy: 智能DNS优化工具</h1>
+                <div class="blog-meta">
+                    <span class="blog-date">2024年1月</span>
+                    <span class="blog-category">网络优化</span>
+                </div>
+            </div>
+            <div class="blog-detail-content">
+                <h2>项目简介</h2>
+                <p>cosDnaPorxy 是一个基于Go语言开发的智能DNS优化工具，通过本地智能识别并篡改DNS解析结果，将Cloudflare污染或劣质IP替换为优选节点，实现无需代理的加速和防DNS污染。</p>
+                <h2>核心特性</h2>
+                <ul>
+                    <li>本地智能识别并篡改DNS解析结果</li>
+                    <li>自动将Cloudflare污染或劣质IP替换为优选节点</li>
+                    <li>无需代理即可加速和防DNS污染</li>
+                    <li>高性能、低资源占用，支持多平台</li>
+                </ul>
+                <h2>快速开始</h2>
+                <ol>
+                    <li><strong>编译项目</strong><br>
+                        <pre><code>go build -o bin/dnsupdate main.go
+# 或指定Go版本
+/path/to/go build -o bin/dnsupdate main.go</code></pre>
+                    </li>
+                    <li><strong>运行服务</strong><br>
+                        <pre><code>./bin/dnsupdate
+# 或指定配置文件
+./bin/dnsupdate -c configs/config.yaml</code></pre>
+                    </li>
+                </ol>
+                <h2>配置说明</h2>
+                <ul>
+                    <li>主配置文件：<code>configs/config.yaml</code></li>
+                    <li>白名单域名：<code>configs/whitelist.txt</code>（可选）</li>
+                    <li>定向域名：<code>configs/designated.txt</code></li>
+                </ul>
+                <h2>目录结构</h2>
+                <ul>
+                    <li><strong>internal/</strong>：核心代码（配置、DNS处理、地理数据、监控、工具）</li>
+                    <li><strong>configs/</strong>：配置文件</li>
+                    <li><strong>data/</strong>：地理位置/IP数据</li>
+                    <li><strong>docs/</strong>：文档</li>
+                    <li><strong>scripts/</strong>：证书、部署、维护脚本</li>
+                    <li><strong>build/</strong>：编译输出</li>
+                </ul>
+                <h2>常用命令</h2>
+                <ul>
+                    <li>编译：<code>go build -o bin/dnsupdate main.go</code></li>
+                    <li>运行：<code>./bin/dnsupdate -c configs/config.yaml</code></li>
+                    <li>测试：<code>cd scripts/test && chmod +x *.sh && ./test_dns.sh</code></li>
+                </ul>
+                <h2>监控与日志</h2>
+                <ul>
+                    <li>Prometheus指标：访问 <code>http://localhost:9090/metrics</code></li>
+                    <li>支持不同级别日志输出，可通过配置文件调整</li>
+                </ul>
+                <h2>贡献指南</h2>
+                <ol>
+                    <li>Fork 项目</li>
+                    <li>创建功能分支</li>
+                    <li>提交更改</li>
+                    <li>创建 Pull Request</li>
+                </ol>
+                <h2>项目地址</h2>
+                <p><a href="https://github.com/dingdadao/cosDnaPorxy" target="_blank">https://github.com/dingdadao/cosDnaPorxy</a></p>
+            </div>
+            <div style="margin-top:2rem;">
+                <a href="index.html#blog" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> 返回博客列表</a>
+            </div>
+        </div>
+    </main>
+</body>
+</html> 
