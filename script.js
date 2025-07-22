@@ -359,3 +359,383 @@ function renderNews() {
 document.addEventListener('DOMContentLoaded', function() {
     renderNews();
 }); 
+
+// 贪吃蛇小游戏（升级：初始不自动开始，最高分，暂停/继续，主站风格提示）
+(function() {
+    const canvas = document.getElementById('snake-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const box = 20;
+    const rows = canvas.width / box;
+    const cols = canvas.height / box;
+    // 全局对象保存状态
+    const INIT_SPEED = 200;
+    const MIN_SPEED = 80;
+    const SPEED_STEP = 10;
+    const SPEED_FOOD_STEP = 3;
+    window.snakeGame = {
+        snake: [{x: 8, y: 10}],
+        direction: 'RIGHT',
+        food: null,
+        score: 0,
+        best: 0,
+        gameOver: false,
+        started: false,
+        paused: false,
+        timer: null,
+        speed: INIT_SPEED
+    };
+    // 最高分本地存储
+    function loadBest() {
+        let best = 0;
+        try { best = parseInt(localStorage.getItem('snake-best')||'0',10)||0; } catch(e){}
+        window.snakeGame.best = best;
+        document.getElementById('snake-best').textContent = best;
+    }
+    function saveBest() {
+        if (window.snakeGame.score > window.snakeGame.best) {
+            window.snakeGame.best = window.snakeGame.score;
+            localStorage.setItem('snake-best', window.snakeGame.best);
+            document.getElementById('snake-best').textContent = window.snakeGame.best;
+        }
+    }
+    function randomFood() {
+        let f;
+        do {
+            f = {
+                x: Math.floor(Math.random() * rows),
+                y: Math.floor(Math.random() * cols)
+            };
+        } while (window.snakeGame.snake.some(s => s.x === f.x && s.y === f.y));
+        return f;
+    }
+    function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        // 画蛇
+        for (let i = 0; i < window.snakeGame.snake.length; i++) {
+            ctx.fillStyle = i === 0 ? '#6366f1' : '#a5b4fc';
+            ctx.fillRect(window.snakeGame.snake[i].x * box, window.snakeGame.snake[i].y * box, box-2, box-2);
+        }
+        // 画食物
+        if (window.snakeGame.started && !window.snakeGame.gameOver && !window.snakeGame.paused) {
+            ctx.fillStyle = '#10b981';
+            ctx.fillRect(window.snakeGame.food.x * box, window.snakeGame.food.y * box, box-2, box-2);
+        }
+        // 状态提示
+        if (!window.snakeGame.started) {
+            drawMsg('点击“开始游戏”按钮来轻松一下！');
+        } else if (window.snakeGame.paused) {
+            drawMsg('已暂停\n点击“继续”或空格恢复');
+        } else if (window.snakeGame.gameOver) {
+            drawMsg('游戏结束\n按空格或“开始游戏”重来');
+        }
+    }
+    function drawMsg(msg) {
+        ctx.save();
+        ctx.globalAlpha = 0.85;
+        ctx.fillStyle = '#fff';
+        ctx.fillRect(0, canvas.height/2-60, canvas.width, 120);
+        ctx.globalAlpha = 1;
+        ctx.fillStyle = '#6366f1';
+        ctx.font = 'bold 1.6rem Inter, sans-serif';
+        ctx.textAlign = 'center';
+        // 自动换行
+        const maxWidth = canvas.width * 0.85;
+        const lines = [];
+        let line = '';
+        for (let word of msg.split('')) {
+            const testLine = line + word;
+            if (ctx.measureText(testLine).width > maxWidth && line.length > 0) {
+                lines.push(line);
+                line = word;
+            } else {
+                line = testLine;
+            }
+        }
+        if (line) lines.push(line);
+        lines.forEach((line,i)=>{
+            ctx.fillText(line, canvas.width/2, canvas.height/2 + (i-0.5)*32);
+        });
+        ctx.restore();
+    }
+    function move() {
+        if (!window.snakeGame.started || window.snakeGame.paused || window.snakeGame.gameOver) return;
+        let head = { ...window.snakeGame.snake[0] };
+        if (window.snakeGame.direction === 'LEFT') head.x--;
+        if (window.snakeGame.direction === 'RIGHT') head.x++;
+        if (window.snakeGame.direction === 'UP') head.y--;
+        if (window.snakeGame.direction === 'DOWN') head.y++;
+        // 撞墙
+        if (head.x < 0 || head.x >= rows || head.y < 0 || head.y >= cols) {
+            endGame();
+            return;
+        }
+        // 撞自己
+        if (window.snakeGame.snake.some(s => s.x === head.x && s.y === head.y)) {
+            endGame();
+            return;
+        }
+        window.snakeGame.snake.unshift(head);
+        // 吃到食物
+        if (head.x === window.snakeGame.food.x && head.y === window.snakeGame.food.y) {
+            window.snakeGame.score++;
+            document.getElementById('snake-score').textContent = window.snakeGame.score;
+            window.snakeGame.food = randomFood();
+            // 动态加速：每吃到3个食物加快一次
+            if (window.snakeGame.score % SPEED_FOOD_STEP === 0 && window.snakeGame.speed > MIN_SPEED) {
+                window.snakeGame.speed = Math.max(MIN_SPEED, window.snakeGame.speed - SPEED_STEP);
+                clearInterval(window.snakeGame.timer);
+                window.snakeGame.timer = setInterval(move, window.snakeGame.speed);
+            }
+        } else {
+            window.snakeGame.snake.pop();
+        }
+        draw();
+    }
+    function endGame() {
+        window.snakeGame.gameOver = true;
+        saveBest();
+        clearInterval(window.snakeGame.timer);
+        draw();
+        showStartBtn();
+        showPauseBtn(false);
+    }
+    function reset() {
+        window.snakeGame.snake = [{x: 8, y: 10}];
+        window.snakeGame.direction = 'RIGHT';
+        window.snakeGame.food = randomFood();
+        window.snakeGame.score = 0;
+        window.snakeGame.speed = INIT_SPEED;
+        document.getElementById('snake-score').textContent = 0;
+        window.snakeGame.gameOver = false;
+        window.snakeGame.started = true;
+        window.snakeGame.paused = false;
+        draw();
+        clearInterval(window.snakeGame.timer);
+        window.snakeGame.timer = setInterval(move, window.snakeGame.speed);
+        showStartBtn(false);
+        showPauseBtn(true);
+    }
+    function pauseGame() {
+        if (!window.snakeGame.started || window.snakeGame.gameOver) return;
+        window.snakeGame.paused = true;
+        draw();
+        showPauseBtn(true, true);
+    }
+    function resumeGame() {
+        if (!window.snakeGame.started || window.snakeGame.gameOver) return;
+        window.snakeGame.paused = false;
+        draw();
+        showPauseBtn(true, false);
+    }
+    function showStartBtn(show=true) {
+        document.getElementById('snake-start-btn').style.display = show ? '' : 'none';
+    }
+    function showPauseBtn(show=true, paused=false) {
+        const btn = document.getElementById('snake-pause-btn');
+        btn.style.display = show ? '' : 'none';
+        btn.textContent = paused ? '继续' : '暂停';
+    }
+    // 供外部事件调用的键盘处理
+    window.snakeGameKeyHandler = function(e) {
+        if (!window.snakeGame.started) return;
+        if (window.snakeGame.gameOver && (e.code === 'Space' || e.key === ' ')) {
+            reset();
+            return;
+        }
+        if ((e.code === 'Space' || e.key === ' ') && !window.snakeGame.gameOver) {
+            if (window.snakeGame.paused) resumeGame();
+            else pauseGame();
+            return;
+        }
+        const key = (e.key||'').toLowerCase();
+        if (["ArrowLeft","KeyA"].includes(e.code) || key === 'a') window.snakeGame.direction = 'LEFT';
+        if (["ArrowUp","KeyW"].includes(e.code) || key === 'w') window.snakeGame.direction = 'UP';
+        if (["ArrowRight","KeyD"].includes(e.code) || key === 'd') window.snakeGame.direction = 'RIGHT';
+        if (["ArrowDown","KeyS"].includes(e.code) || key === 's') window.snakeGame.direction = 'DOWN';
+    };
+    // 虚拟按钮事件也用全局对象
+    (function() {
+        const btnUp = document.getElementById('btn-up');
+        const btnDown = document.getElementById('btn-down');
+        const btnLeft = document.getElementById('btn-left');
+        const btnRight = document.getElementById('btn-right');
+        if (!btnUp) return;
+        function setDir(dir) {
+            if (!window.snakeGame.started || window.snakeGame.paused || window.snakeGame.gameOver) return;
+            if (dir === 'LEFT' && window.snakeGame.direction !== 'RIGHT') window.snakeGame.direction = 'LEFT';
+            if (dir === 'RIGHT' && window.snakeGame.direction !== 'LEFT') window.snakeGame.direction = 'RIGHT';
+            if (dir === 'UP' && window.snakeGame.direction !== 'DOWN') window.snakeGame.direction = 'UP';
+            if (dir === 'DOWN' && window.snakeGame.direction !== 'UP') window.snakeGame.direction = 'DOWN';
+        }
+        [
+            [btnUp, 'UP'],
+            [btnDown, 'DOWN'],
+            [btnLeft, 'LEFT'],
+            [btnRight, 'RIGHT']
+        ].forEach(([btn, dir]) => {
+            btn.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                setDir(dir);
+            }, {passive: false});
+            btn.addEventListener('mousedown', function(e) {
+                e.preventDefault();
+                setDir(dir);
+            });
+        });
+    })();
+    // 按钮事件
+    document.getElementById('snake-start-btn').onclick = function() {
+        if (!window.snakeGame.started || window.snakeGame.gameOver) {
+            reset();
+        }
+    };
+    document.getElementById('snake-pause-btn').onclick = function() {
+        if (!window.snakeGame.started || window.snakeGame.gameOver) return;
+        if (window.snakeGame.paused) resumeGame();
+        else pauseGame();
+    };
+    // canvas点击也可开始
+    canvas.addEventListener('mousedown', function() {
+        if (!window.snakeGame.started || window.snakeGame.gameOver) {
+            reset();
+        }
+    });
+    canvas.addEventListener('touchstart', function() {
+        if (!window.snakeGame.started || window.snakeGame.gameOver) {
+            reset();
+        }
+    });
+    // 初始化
+    loadBest();
+    window.snakeGame.food = randomFood();
+    draw();
+    showStartBtn(true);
+    showPauseBtn(false);
+})(); 
+
+// 判断是否移动端
+function isMobile() {
+    return /Mobi|Android|iPhone|iPad|iPod|Mobile|Phone/i.test(navigator.userAgent) || window.innerWidth <= 600;
+}
+
+// 小游戏乐园弹窗控制（含方向按钮位置切换+全局键盘监听）
+(function() {
+    const snakeModal = document.getElementById('snake-modal');
+    const snakeStartBtns = document.querySelectorAll('.game-start-btn[data-game="snake"]');
+    const snakeModalClose = document.getElementById('snake-modal-close');
+    const fabControls = document.querySelector('.snake-fab-controls');
+    const snakeCanvas = document.getElementById('snake-canvas');
+    const snakeStartBtn = document.getElementById('snake-start-btn');
+    let keyHandler = null;
+    if (!snakeModal) return;
+    function openSnakeModal() {
+        snakeModal.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+        // 方向按钮位置切换
+        if (fabControls) {
+            if (isMobile()) {
+                fabControls.style.display = 'flex';
+                fabControls.style.position = 'static';
+                fabControls.style.margin = '1.2rem auto 0 auto';
+                fabControls.style.justifyContent = 'center';
+                fabControls.style.setProperty('display', 'flex', 'important');
+                // 插入到弹窗canvas下方
+                const snakeGameWrapper = snakeModal.querySelector('.snake-game-wrapper');
+                if (snakeGameWrapper && !snakeGameWrapper.contains(fabControls)) {
+                    snakeGameWrapper.appendChild(fabControls);
+                }
+            } else {
+                fabControls.style.setProperty('display', 'none', 'important');
+            }
+        }
+        // 重新初始化游戏（防止残留状态）
+        if(window.snakeGame && typeof window.snakeGame.timer === 'number') clearInterval(window.snakeGame.timer);
+        if(window.snakeGame && typeof window.snakeGameKeyHandler === 'function') {
+            window.snakeGame.started = false;
+            window.snakeGame.gameOver = false;
+            window.snakeGame.paused = false;
+            window.snakeGame.score = 0;
+            window.snakeGame.snake = [{x: 8, y: 10}];
+            window.snakeGame.direction = 'RIGHT';
+            window.snakeGame.food = (function randomFood() {
+                let f, box=20, rows=20, cols=20;
+                do {
+                    f = {
+                        x: Math.floor(Math.random() * rows),
+                        y: Math.floor(Math.random() * cols)
+                    };
+                } while (window.snakeGame.snake.some(s => s.x === f.x && s.y === f.y));
+                return f;
+            })();
+            document.getElementById('snake-score').textContent = 0;
+            if(window.snakeGame.timer) clearInterval(window.snakeGame.timer);
+            window.snakeGame.timer = null;
+            // 重新绘制初始界面
+            if(typeof window.snakeGameKeyHandler === 'function') {
+                window.snakeGameKeyHandler({});
+            }
+            // 触发一次draw
+            if(typeof window.snakeGame.food !== 'undefined') {
+                const evt = new Event('draw');
+                document.getElementById('snake-canvas').dispatchEvent(evt);
+            }
+        }
+        // 全局键盘监听（无需canvas聚焦）
+        if (!keyHandler) {
+            keyHandler = function(e) {
+                if (document.getElementById('snake-modal').style.display === 'block') {
+                    window.snakeGameKeyHandler(e);
+                }
+            };
+            window.addEventListener('keydown', keyHandler, {capture:true});
+        }
+    }
+    function closeSnakeModal() {
+        snakeModal.style.display = 'none';
+        document.body.style.overflow = '';
+        // 关闭时清理定时器，防止内存泄漏
+        if(window.snakeGame && window.snakeGame.timer) clearInterval(window.snakeGame.timer);
+        // 恢复方向按钮到全局悬浮
+        if (fabControls) {
+            fabControls.style.removeProperty('display');
+            fabControls.style.position = '';
+            fabControls.style.margin = '';
+            fabControls.style.justifyContent = '';
+            document.body.appendChild(fabControls);
+        }
+        // 移除全局键盘监听
+        if (keyHandler) {
+            window.removeEventListener('keydown', keyHandler, {capture:true});
+            keyHandler = null;
+        }
+    }
+    snakeStartBtns.forEach(btn => btn.onclick = openSnakeModal);
+    snakeModalClose.onclick = closeSnakeModal;
+    // 点击模态框外部关闭
+    window.addEventListener('click', function(e) {
+        if(e.target === snakeModal) closeSnakeModal();
+    });
+
+    // 虚拟按钮点击时如果未开始则自动开始游戏
+    const btnUp = document.getElementById('btn-up');
+    const btnDown = document.getElementById('btn-down');
+    const btnLeft = document.getElementById('btn-left');
+    const btnRight = document.getElementById('btn-right');
+    function ensureGameStarted() {
+        if(window.snakeGame && (!window.snakeGame.started || window.snakeGame.gameOver)) {
+            if(snakeStartBtn) snakeStartBtn.click();
+        }
+    }
+    [[btnUp,'UP'],[btnDown,'DOWN'],[btnLeft,'LEFT'],[btnRight,'RIGHT']].forEach(([btn,dir]) => {
+        if(!btn) return;
+        btn.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            ensureGameStarted();
+        }, {passive: false});
+        btn.addEventListener('mousedown', function(e) {
+            e.preventDefault();
+            ensureGameStarted();
+        });
+    });
+})(); 
