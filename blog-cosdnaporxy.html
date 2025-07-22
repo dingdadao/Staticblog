@@ -32,39 +32,64 @@
                 </div>
             </div>
             <div class="blog-detail-content">
-                <h2>项目简介</h2>
-                <p>cosDnaPorxy 是一个高性能、智能化的DNS代理服务，支持多云节点优选、域名分流、标签智能路由、DoT/DoH多上游、权重/最快优选等高级功能，帮助用户实现灵活、高效、安全的DNS解析体验。</p>
-                <h2>核心功能</h2>
-                <ul>
-                    <li><strong>多云节点优选：</strong>支持自动优选 AWS、Cloudflare（CF）、腾讯云、阿里云等多家云服务商的DNS节点，动态选择最快/最优节点。</li>
-                    <li><strong>名单/标签智能分流：</strong>可自定义域名名单（如淘宝系列、微信/QQ等），指定走阿里、腾讯等不同DNS解析；也可根据域名标签（如“金融”、“社交”）智能分流到不同上游。</li>
-                    <li><strong>多上游协议支持：</strong>支持 DoT（DNS over TLS）、DoH（DNS over HTTPS）等多种安全DNS协议，提升隐私与安全性。</li>
-                    <li><strong>权重与最快优选：</strong>支持多上游节点权重分配、自动测速，优先选择最快或权重最高的DNS服务器。</li>
-                    <li><strong>灵活配置：</strong>支持配置文件灵活定制分流规则、上游节点、优选策略等，满足复杂场景需求。</li>
-                </ul>
-                <h2>典型应用场景</h2>
-                <ul>
-                    <li>加速国内外网站访问，自动避开污染/劣质DNS节点</li>
-                    <li>企业/个人多云环境下的智能DNS路由</li>
-                    <li>按业务/域名类型分流（如金融、社交、视频等）</li>
-                    <li>提升DNS安全性与隐私保护</li>
-                </ul>
-                <h2>使用示例</h2>
-                <ol>
-                    <li>配置多组上游DNS节点（如AWS、CF、阿里、腾讯等），可指定DoT/DoH协议</li>
-                    <li>自定义域名名单或标签，指定不同DNS解析策略</li>
-                    <li>启动服务后，自动测速并优选最快/最优节点</li>
-                    <li>支持实时监控、日志输出、动态调整配置</li>
-                </ol>
-                <h2>技术亮点</h2>
-                <ul>
-                    <li>高性能Go实现，低资源占用</li>
-                    <li>支持多协议、多上游、多云节点</li>
-                    <li>灵活分流、智能优选、标签化管理</li>
-                    <li>易于部署，配置简单，开源可扩展</li>
-                </ul>
-                <h2>项目地址</h2>
-                <p><a href="https://github.com/dingdadao/cosDnaPorxy" target="_blank">https://github.com/dingdadao/cosDnaPorxy</a></p>
+                <section class="detail-section">
+                    <h2>项目简介</h2>
+                    <p>cosDnaPorxy 是一个高性能、智能化的DNS代理服务，支持多云节点优选、域名分流、标签智能路由、DoT/DoH多上游、权重/最快优选等高级功能，帮助用户实现灵活、高效、安全的DNS解析体验。</p>
+                </section>
+                <hr class="detail-divider"/>
+                <section class="detail-section">
+                    <h2>主要功能</h2>
+                    <ul>
+                        <li><b>多云节点优选：</b> 自动优选 AWS、Cloudflare、腾讯云、阿里云等多家云服务商的DNS节点，动态选择最快/最优节点。</li>
+                        <li><b>名单/标签智能分流：</b> 自定义域名名单（如淘宝系列、微信/QQ等），指定走阿里、腾讯等不同DNS解析；也可根据域名标签（如“金融”、“社交”）智能分流到不同上游。</li>
+                        <li><b>多上游协议支持：</b> 支持 DoT（DNS over TLS）、DoH（DNS over HTTPS）等多种安全DNS协议，提升隐私与安全性。</li>
+                        <li><b>权重与最快优选：</b> 多上游节点权重分配、自动测速，优先选择最快或权重最高的DNS服务器。</li>
+                        <li><b>灵活配置：</b> 配置文件灵活定制分流规则、上游节点、优选策略等，满足复杂场景需求。</li>
+                    </ul>
+                </section>
+                <hr class="detail-divider"/>
+                <section class="detail-section">
+                    <h2>典型应用场景</h2>
+                    <ul>
+                        <li>加速国内外网站访问，自动避开污染/劣质DNS节点</li>
+                        <li>企业/个人多云环境下的智能DNS路由</li>
+                        <li>按业务/域名类型分流（如金融、社交、视频等）</li>
+                        <li>提升DNS安全性与隐私保护</li>
+                    </ul>
+                </section>
+                <hr class="detail-divider"/>
+                <section class="detail-section">
+                    <h2>配置与编译流程</h2>
+                    <ol>
+                        <li>配置多组上游DNS节点（如AWS、CF、阿里、腾讯等），可指定DoT/DoH协议</li>
+                        <li>自定义域名名单或标签，指定不同DNS解析策略</li>
+                        <li>启动服务后，自动测速并优选最快/最优节点</li>
+                        <li>支持实时监控、日志输出、动态调整配置</li>
+                    </ol>
+                    <div class="detail-code-block">
+<pre><code># 编译
+$ go build -o bin/dnsupdate main.go
+
+# 运行
+$ ./bin/dnsupdate -c configs/config.yaml
+</code></pre>
+                    </div>
+                </section>
+                <hr class="detail-divider"/>
+                <section class="detail-section">
+                    <h2>技术亮点</h2>
+                    <ul>
+                        <li>高性能Go实现，低资源占用</li>
+                        <li>支持多协议、多上游、多云节点</li>
+                        <li>灵活分流、智能优选、标签化管理</li>
+                        <li>易于部署，配置简单，开源可扩展</li>
+                    </ul>
+                </section>
+                <hr class="detail-divider"/>
+                <section class="detail-section">
+                    <h2>项目地址</h2>
+                    <p><a href="https://github.com/dingdadao/cosDnaPorxy" target="_blank">https://github.com/dingdadao/cosDnaPorxy</a></p>
+                </section>
             </div>
             <div style="margin-top:2rem;">
                 <a href="index.html#blog" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> 返回博客列表</a>
